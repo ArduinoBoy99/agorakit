@@ -179,7 +179,9 @@ return [
         Bestmomo\Installer\InstallerServiceProvider::class,
         */
 
-        DraperStudio\Taggable\ServiceProvider::class
+        DraperStudio\Taggable\ServiceProvider::class,
+
+        Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class,
 
 
     ],
@@ -233,6 +235,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'AdminLTE' => Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class,
 
     ],
 

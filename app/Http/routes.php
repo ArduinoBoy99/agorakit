@@ -48,6 +48,8 @@ Route::group(['middleware' => ['web']], function () {
   Route::get('/', 'DashboardController@index');
   Route::get('home', 'DashboardController@index');
 
+   Route::get('test', 'HomeController@index');
+
 
   /*
   Admin stuff

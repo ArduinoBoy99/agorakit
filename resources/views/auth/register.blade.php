@@ -1,69 +1,88 @@
-@extends('app')
+@extends('layouts.auth')
+
+@section('htmlheader_title')
+    Register
+@endsection
 
 @section('content')
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
 
-			<div class="help" role="alert">
-				<i class="fa fa-info-circle" aria-hidden="true"></i>
-			{{trans('messages.if_you_already_have_account')}}, <a href="{{url('login')}}">{{trans('messages.you_can_login_here')}}</a>
-			</div>
+    <body class="hold-transition register-page">
+    <div class="register-box">
+        <div class="register-logo">
+            <a href="{{ url('/home') }}"><b>Admin</b>LTE</a>
+        </div>
 
-			<div class="panel panel-default">
-				<div class="panel-heading">{{ trans('messages.register') }}</div>
-				<div class="panel-body">
+        @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong> {{ trans('adminlte_lang::message.someproblems') }}<br><br>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
+        <div class="register-box-body">
+            <p class="login-box-msg">{{ trans('adminlte_lang::message.registermember') }}</p>
+            <form action="{{ url('/register') }}" method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" placeholder="{{ trans('adminlte_lang::message.fullname') }}" name="name" value="{{ old('name') }}"/>
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="email" class="form-control" placeholder="{{ trans('adminlte_lang::message.email') }}" name="email" value="{{ old('email') }}"/>
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" placeholder="{{ trans('adminlte_lang::message.password') }}" name="password"/>
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" placeholder="{{ trans('adminlte_lang::message.retrypepassword') }}" name="password_confirmation"/>
+                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-1">
+                        <label>
+                            <div class="checkbox_register icheck">
+                                <label>
+                                    <input type="checkbox" name="terms">
+                                </label>
+                            </div>
+                        </label>
+                    </div><!-- /.col -->
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-block btn-flat" data-toggle="modal" data-target="#termsModal">{{ trans('adminlte_lang::message.terms') }}</button>
+                        </div>
+                    </div><!-- /.col -->
+                    <div class="col-xs-4 col-xs-push-1">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">{{ trans('adminlte_lang::message.register') }}</button>
+                    </div><!-- /.col -->
+                </div>
+            </form>
 
+            @include('auth.partials.social_login')
 
-					@if (isset($invite_and_register))
-					<form class="form-horizontal" role="form" method="POST" action="{{ action('InviteController@inviteRegister') }}">
-					@else
-					<form class="form-horizontal" role="form" method="POST" action="{{ url('register') }}">
-					@endif
+            <a href="{{ url('/login') }}" class="text-center">{{ trans('adminlte_lang::message.membreship') }}</a>
+        </div><!-- /.form-box -->
+    </div><!-- /.register-box -->
 
+    @include('layouts.partials.scripts_auth')
 
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+    @include('auth.terms')
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">{{ trans('messages.name') }}</label>
-							<div class="col-md-6">
-								<input type="text" class="form-control" required="required"  name="name" value="{{ old('name') }}">
-							</div>
-						</div>
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
+        });
+    </script>
+</body>
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">{{ trans('messages.email') }}</label>
-							<div class="col-md-6">
-								<input type="email" class="form-control" required="required" name="email" value="@if (isset($email)) {{$email}}@else{{ old('email')}}@endif">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">{{ trans('messages.password') }}</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" required="required" name="password">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">{{ trans('messages.confirm_password') }}</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" required="required" name="password_confirmation">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">
-									{{ trans('messages.register') }}
-								</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 @endsection
