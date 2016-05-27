@@ -32,6 +32,21 @@ class AppServiceProvider extends ServiceProvider
             }
           });
 
+
+          // adds user info to all views
+          view()->composer('layouts.partials.mainheader', function ($view) {
+            $view->with('user_logged', Auth::check());
+
+            if (Auth::check()) {
+              $view->with('user', Auth::user());
+
+              // count number of unread discussions.
+              $view->with('unread_discussions', QueryHelper::getUnreadDiscussionsCount());
+              $view->with('user_groups', Auth::user()->groups()->orderBy('name')->get());
+
+            }
+          });
+
           // set correct locale for Carbon
           Carbon::setLocale(config('app.locale'));
           //Carbon::setLocale(Session::get('locale', env('APP_DEFAULT_LOCALE', 'nl'))); // TODO this doesn't work

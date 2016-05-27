@@ -20,7 +20,7 @@
                     </a>
                 </li>
 
-                @if ($user_logged)
+                @if (Auth::check())
                     <li>
                         <a href="{{ action('DashboardController@unreadDiscussions') }}">
                             {{ trans('messages.latest_discussions') }}

@@ -5,9 +5,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html lang="en">
 
-@section('htmlheader')
-    @include('layouts.partials.htmlheader')
-@show
+<?php $__env->startSection('htmlheader'); ?>
+    <?php echo $__env->make('layouts.partials.htmlheader', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->yieldSection(); ?>
 
 <!--
 BODY TAG OPTIONS:
@@ -32,31 +32,31 @@ desired effect
 <body class="skin-blue sidebar-mini">
 <div class="wrapper">
 
-    @include('layouts.partials.mainheader')
+    <?php echo $__env->make('layouts.partials.mainheader', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
-    @include('layouts.partials.sidebar')
+    <?php echo $__env->make('layouts.partials.sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-        @include('layouts.partials.contentheader')
+        <?php echo $__env->make('layouts.partials.contentheader', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
         <!-- Main content -->
         <section class="content">
             <!-- Your Page Content Here -->
-            @yield('content')
+            <?php echo $__env->yieldContent('content'); ?>
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
 
-    @include('layouts.partials.controlsidebar')
+    <?php echo $__env->make('layouts.partials.controlsidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
-    @include('layouts.partials.footer')
+    <?php echo $__env->make('layouts.partials.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
 </div><!-- ./wrapper -->
 
-@section('scripts')
-    @include('layouts.partials.scripts')
-@show
+<?php $__env->startSection('scripts'); ?>
+    <?php echo $__env->make('layouts.partials.scripts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->yieldSection(); ?>
 
 </body>
 </html>
