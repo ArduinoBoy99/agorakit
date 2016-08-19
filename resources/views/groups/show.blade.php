@@ -1,39 +1,53 @@
-@extends('app')
+@extends('adminlte::page')
+
+
+@section('content_header')
+    <h1>
+        <a href="{{ action('DashboardController@index') }}"><i class="fa fa-home"></i></a> <i class="fa fa-angle-right"></i>
+        @if (isset($tab) && ($tab <> 'home'))
+            <a href="{{ action('GroupController@show', $group->id) }}">{{ $group->name }}</a>
+        @else
+            {{ $group->name }}
+        @endif
+
+        <span class="small">
+            @if ($group->isPublic())
+                <i class="fa fa-globe" title="{{trans('group.open')}}"></i>
+            @else
+                <i class="fa fa-lock" title="{{trans('group.closed')}}"></i>
+            @endif
+        </span>
+    </h1>
+@stop
+
 
 @section('content')
 
-    @include('partials.grouptab')
+    <h2>{{trans('group.about_this_group')}}  </h2>
 
-    <div class="tab_content container">
+    <div class="row">
+        <div class="col-md-6">
+            {!! filter($group->body) !!}
 
-
-
-
-        <h2>{{trans('group.about_this_group')}}  </h2>
-
-        <div class="row">
-            <div class="col-md-6">
-                {!! filter($group->body) !!}
-
-                <p>
-                    @can('update', $group)
-                        <a class="btn btn-default btn-xs" href="{{ action('GroupController@edit', [$group->id]) }}">
-                            <i class="fa fa-pencil"></i>
-                            {{trans('messages.edit')}}
-                        </a>
-                    @endcan
+            <p>
+                @can('update', $group)
+                    <a class="btn btn-default btn-xs" href="{{ action('GroupController@edit', [$group->id]) }}">
+                        <i class="fa fa-pencil"></i>
+                        {{trans('messages.edit')}}
+                    </a>
+                @endcan
 
 
-                    @if ($group->revisionHistory->count() > 0)
-                        <a class="btn btn-default btn-xs" href="{{action('GroupController@history', $group->id)}}">
-                            <i class="fa fa-history"></i>
-                            {{trans('messages.show_history')}}
-                        </a>
-                    @endif
+                @if ($group->revisionHistory->count() > 0)
+                    <a class="btn btn-default btn-xs" href="{{action('GroupController@history', $group->id)}}">
+                        <i class="fa fa-history"></i>
+                        {{trans('messages.show_history')}}
+                    </a>
+                @endif
 
-                    @can('delete', $group)
-                      <a class="btn btn-default btn-xs" href="{{ action('GroupController@destroyConfirm', [$group->id]) }}"><i class="fa fa-trash"></i>
-                      {{trans('messages.delete')}}</a>
+                @can('delete', $group)
+                    <a class="btn btn-default btn-xs" href="{{ action('GroupController@destroyConfirm', [$group->id]) }}"><i class="fa fa-trash"></i>
+                        {{trans('messages.delete')}}</a>
                     @endcan
 
                 </p>

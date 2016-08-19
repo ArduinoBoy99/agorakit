@@ -188,6 +188,8 @@ return [
 
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
+        JeroenNoten\LaravelAdminLte\ServiceProvider::class,
+
 
     ],
 

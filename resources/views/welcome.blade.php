@@ -1,15 +1,17 @@
-@extends('app')
+@extends('layouts.app')
 
 @section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">Welcome</div>
 
-@if ($user_logged)
-Dashboard here
-@else
-<a class="btn btn-primary" href="{{ url('register') }}" role="button"><span class="glyphicon glyphicon-user"></span> {{ trans('messages.register') }}</a>
-
-{{ trans('messages.or') }}
-
-<a class="btn btn-primary" href="{{ url('login') }}" role="button"><span class="glyphicon glyphicon-off"></span> {{ trans('messages.login') }}</a>
-@endif
-
+                <div class="panel-body">
+                    Your Application's Landing Page.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

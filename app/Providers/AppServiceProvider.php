@@ -11,37 +11,51 @@ use Session;
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
+    * Bootstrap any application services.
+    *
+    * @return void
+    */
     public function boot()
     {
 
-          // adds user info to all views
-          view()->composer('partials.nav', function ($view) {
+        // adds user info to all views
+        view()->composer('partials.nav', function ($view) {
             $view->with('user_logged', Auth::check());
 
             if (Auth::check()) {
-              $view->with('user', Auth::user());
+                $view->with('user', Auth::user());
 
-              // count number of unread discussions.
-              $view->with('unread_discussions', QueryHelper::getUnreadDiscussionsCount());
-              $view->with('user_groups', Auth::user()->groups()->orderBy('name')->get());
+                // count number of unread discussions.
+                $view->with('unread_discussions', QueryHelper::getUnreadDiscussionsCount());
+                $view->with('user_groups', Auth::user()->groups()->orderBy('name')->get());
 
             }
-          });
+        });
 
-          // set correct locale for Carbon
-          Carbon::setLocale(config('app.locale'));
+
+        view()->composer('partials.sidebar', function ($view) {
+            $view->with('user_logged', Auth::check());
+
+            if (Auth::check()) {
+                $view->with('user', Auth::user());
+
+                // count number of unread discussions.
+                $view->with('unread_discussions', QueryHelper::getUnreadDiscussionsCount());
+                $view->with('user_groups', Auth::user()->groups()->orderBy('name')->get());
+
+            }
+        });
+
+        // set correct locale for Carbon
+        Carbon::setLocale(config('app.locale'));
 
     }
 
     /**
-     * Register any application services.
-     *
-     * @return void
-     */
+    * Register any application services.
+    *
+    * @return void
+    */
     public function register()
     {
         //

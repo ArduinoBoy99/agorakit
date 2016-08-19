@@ -49,6 +49,9 @@ Route::group(['middleware' => ['web']], function () {
   Route::get('home', 'DashboardController@index');
 
 
+  Route::get('newhome', 'DashboardController@newindex');
+
+
   /*
   Admin stuff
   ===========

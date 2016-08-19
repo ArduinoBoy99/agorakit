@@ -86,6 +86,53 @@ class DashboardController extends Controller
         ->with('all_actions', $all_actions);
     }
 
+
+    /**
+    * Main HOMEPAGE
+    *
+    * @return Response
+    */
+    public function newindex(Request $request) // TODO rename this crap
+    {
+        if (Auth::check())
+        {
+            $my_groups = Auth::user()->groups()->orderBy('name')->get();
+            $my_groups_id = false;
+            // using this array we can adjust the queries after to only include stuff the user has
+            // might be a good idea to find a clever way to build this array of groups id :
+            foreach ($my_groups as $the_group)
+            {
+                $my_groups_id[] = $the_group->id;
+            }
+
+            $my_discussions = \App\Discussion::with('userReadDiscussion', 'user', 'group')
+            ->whereIn('group_id', $my_groups_id)
+            ->orderBy('updated_at', 'desc')->paginate(5);
+
+            $my_actions = \App\Action::with('user', 'group')
+            ->whereIn('group_id', $my_groups_id)
+            ->where('start', '>=', Carbon::now())->orderBy('start', 'asc')->paginate(5);
+
+
+            $all_groups = \App\Group::with('membership')->orderBy('name')->paginate(500);
+            $all_discussions = \App\Discussion::with('userReadDiscussion', 'user', 'group')->whereNotIn('group_id', $my_groups_id)->orderBy('updated_at', 'desc')->paginate(5);
+            $all_actions = \App\Action::with('user', 'group')->where('start', '>=', Carbon::now())->whereNotIn('group_id', $my_groups_id)->orderBy('start', 'asc')->paginate(5);
+
+
+            return view('dashboard.index')
+            ->with('all_groups', $all_groups)
+            ->with('all_discussions', $all_discussions)
+            ->with('all_actions', $all_actions)
+            ->with('my_groups', $my_groups)
+            ->with('my_discussions', $my_discussions)
+            ->with('my_actions', $my_actions);
+        }
+
+
+
+
+    }
+
     /**
     * Generates a list of unread discussions.
     */
