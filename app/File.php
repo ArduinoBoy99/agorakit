@@ -94,8 +94,15 @@ class File extends Model
 
     public function addChild(File $file)
     {
-        $file->parent_id = $this->id;
-        return $file->save();
+        if ($this->isFolder())
+        {
+            $file->parent_id = $this->id;
+            return $file->save();
+        }
+        else
+        {
+            return false;
+        }
     }
 
 
@@ -119,9 +126,7 @@ class File extends Model
                 break;
             }
         }
-
         return $ancestors;
-
 
     }
 
