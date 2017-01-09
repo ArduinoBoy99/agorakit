@@ -2,9 +2,16 @@
 
 ## Mobilizator
 
-Mobilize crowds efficiently. Allow anyone to create a collaborative group. No admins involved in the process. Manage communication, decision making, membership, files and events.
+Mobilize crowds efficiently. Allow anyone to create a collaborative group. No admins involved in the process.
+Manage communication, decision making, membership, files and events.
 
-Facebook for the paranoid inside any of us.
+A kind of Facebook for the paranoid inside any of us. The goal is to provide a tool for citizen (and people in general) to organize.
+
+In use at :  
+- http://participer.toutautrechose.be
+- http://deelnemen.hartbovenhard.be
+
+
 
 ## Requirements
 You need a good webhosting provider that provides the following :
