@@ -1,4 +1,4 @@
-<div class="ui fixed menu">
+<div class="ui top attached menu">
 
   <div class="ui container">
     <a href="{{ action('DashboardController@index') }}" class="header item">
@@ -80,7 +80,7 @@
 
 
   @if ($user_logged)
-    <div class="item">
+    <div class="search item">
       <form role="search" action="{{url('search')}}">
         <div class="ui icon input">
           <input placeholder="{{trans('messages.search')}}..." type="text" name="query">
@@ -143,6 +143,7 @@
   </div>
 
 </div>
+
 
 
 @if (isset($user->verified) && ($user->verified == 0))
