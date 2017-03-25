@@ -2,53 +2,63 @@
 
 @section('content')
 
-  <div class="page_header">
-    <h1><a href="{{ action('DashboardController@index') }}"><i class="fa fa-home"></i></a> <i class="fa fa-angle-right"></i> {{ trans('messages.all_groups') }}</h1>
-  </div>
 
-  <div class="ui four stackable cards">
+    <div class="ui massive breadcrumb">
+
+        <a class="section" href="{{ action('DashboardController@index') }}">
+            <i class="home icon"></i>
+        </a>
+        <i class="right chevron icon divider"></i>
+        <div class="active section">{{ trans('messages.all_groups') }}</div>
+    </div>
 
 
-    @forelse( $groups as $group )
-      <a class="card" href="{{ action('GroupController@show', $group->id) }}">
-        <div class="image">
-          <img src="{{action('GroupController@cover', $group->id)}}"/>
-        </div>
+    <div class="ui four stackable cards">
 
-        <div class="content">
-          <div class="header">
-            {{ $group->name }}
-            @if ($group->isPublic())
-              <i class="globe icon" title="{{trans('group.open')}}"></i>
-            @else
-              <i class="lock icon" title="{{trans('group.closed')}}"></i>
-            @endif
 
-          </div>
-          <div class="meta">
-            {{ summary($group->body, 150) }}
-          </div>
-        </div>
-      </a>
+        @forelse( $groups as $group )
+            <a class="card" href="{{ action('GroupController@show', $group->id) }}">
+                <div class="image">
+                    <img src="{{action('GroupController@cover', $group->id)}}"/>
+                </div>
 
-    @empty
-      {{trans('group.no_group_yet')}}
-    @endforelse
+                <div class="content">
+                    <div class="header">
+                        {{ $group->name }}
+                        @if ($group->isPublic())
+                            <i class="globe icon" title="{{trans('group.open')}}"></i>
+                        @else
+                            <i class="lock icon" title="{{trans('group.closed')}}"></i>
+                        @endif
 
-    <a class="card" href="{{ action('GroupController@create') }}">
-      <div class="image">
-        <div style="margin: auto; text-align: center; width: 100%; height:auto;"><i class="fa fa-plus-circle" style="font-size: 150px;" aria-hidden="true"></i></div>
-      </div>
+                    </div>
+                    <div class="description">
+                        {{ summary($group->body, 150) }}
+                    </div>
+                </div>
+            </a>
 
-      <div class="content">
-        <div class="header">
-          <a href="{{ action('GroupController@create') }}">{{ trans('group.your_group_here') }}</a>
-        </div>
-        <div class="description">{{ trans('group.create_a_group_intro') }}</div>
-      </div>
-    </a>
+        @empty
+            {{trans('group.no_group_yet')}}
+        @endforelse
 
-  </div>
+        <a class="card" href="{{ action('GroupController@create') }}">
+            <div class="image">
+                <div style="margin: auto; text-align: center; width: 100%; height:auto;"><i class="fa fa-plus-circle" style="font-size: 150px;" aria-hidden="true"></i></div>
+            </div>
+
+            <div class="content">
+                <div class="header">
+                    {{ trans('group.your_group_here') }}
+                </div>
+                <div class="description">
+                    {{ trans('group.create_a_group_intro') }}
+                </div>
+            </div>
+
+        </a>
+
+    </div>
 
 
 
